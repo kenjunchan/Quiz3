@@ -9,39 +9,23 @@ public class Deck {
 
 	public Deck(int numberOfDecks)
 	{
-		for(int i = 0; i < numberOfDecks; i++)
-		{
-			this.buildDeck(eSuit.DIAMONDS);
-			this.buildDeck(eSuit.CLUBS);
-			this.buildDeck(eSuit.HEARTS);
-			this.buildDeck(eSuit.SPADES);
+		for(int i = 0; i < numberOfDecks ; i++)
+		{	
+			for(eSuit eSuit : eSuit.values())
+			{  
+				for(eRank eRank : eRank.values())
+				{
+					cards.add(new Card(eSuit, eRank));
+				}
+			}
 		}
+		
+		Collections.shuffle(cards);
 	}
 	
-	public void buildDeck(eSuit eSuit)
-	{
-		Card c;
-		//cards.add(c = new Card(eRank.ONE,eSuit));
-		cards.add(c = new Card(eSuit, eRank.TWO));
-		cards.add(c = new Card(eSuit, eRank.THREE));
-		cards.add(c = new Card(eSuit, eRank.FOUR));
-		cards.add(c = new Card(eSuit, eRank.FIVE));
-		cards.add(c = new Card(eSuit, eRank.SIX));
-		cards.add(c = new Card(eSuit, eRank.SEVEN));
-		cards.add(c = new Card(eSuit, eRank.EIGHT));
-		cards.add(c = new Card(eSuit, eRank.NINE));
-		cards.add(c = new Card(eSuit, eRank.TEN));
-		cards.add(c = new Card(eSuit, eRank.JACK));
-		cards.add(c = new Card(eSuit, eRank.QUEEN));
-		cards.add(c = new Card(eSuit, eRank.KING));
-		cards.add(c = new Card(eSuit, eRank.ACE));
-	}
 	public Card draw()
-	{
-		int cardPosition = (int)(Math.random()*cards.size());
-		Card returnCard = cards.get(cardPosition);
-		cards.remove(cardPosition);
-		return returnCard;
+	{		
+		return cards.remove(0);
 	}
 	public int getDeckSize()
 	{

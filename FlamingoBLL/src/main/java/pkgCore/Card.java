@@ -13,6 +13,11 @@ public class Card implements Comparable
 		this.eRank = eRank;
 		this.eSuit = eSuit;
 	}
+	public Card( eRank eRank, eSuit eSuit)
+	{
+		this.eRank = eRank;
+		this.eSuit = eSuit;
+	}
 	public eRank geteRank() {
 		return eRank;
 	}
