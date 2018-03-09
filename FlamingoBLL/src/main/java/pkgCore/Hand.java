@@ -3,6 +3,7 @@ package pkgCore;
 import java.util.ArrayList;
 import java.util.Collections;
 
+import Exceptions.DeckException;
 import pkgEnum.eRank;
 import pkgEnum.eSuit;
 
@@ -20,58 +21,73 @@ public class Hand {
 	{
 		int [] iScore = new int[2];
 		
-		iScore[0] = 5;
-		iScore[1] = 10;
+		iScore[0] = 0;
+		iScore[1] = 0;
 		
 		Collections.sort(cards);
-		
-		int tempyScore = 0;
 		for (Card c: cards)
 		{
 			if(c.geteRank() == eRank.ACE)
 			{
-					tempyScore += 1;
+					iScore[0] += 1;
+					iScore[1] += 1;
+					if(iScore[1] + 10 <= 21)
+					{
+						iScore[1] += 10;
+					}
 			}
 			else if(c.geteRank() == eRank.JACK || c.geteRank() == eRank.QUEEN || c.geteRank() == eRank.KING)
 			{
-				tempyScore += 10;
+				iScore[0] += 10;
+				iScore[1] += 10;
 			}
 			else
 			{
-				tempyScore += c.geteRank().getiRankNbr();
+				iScore[0] += c.geteRank().getiRankNbr();
+				iScore[1] += c.geteRank().getiRankNbr();
 			}
 		}
-		
-		iScore[0] = tempyScore;
-		int tempxScore = 0;
-		for (Card c: cards)
-		{
-			if(c.geteRank() == eRank.ACE)
-			{
-				if((tempxScore + 11) > 21)
-				{
-					tempxScore += 1;
-				}
-				else
-				{
-					tempxScore += 11;
-				}
-			}
-			else if(c.geteRank() == eRank.JACK || c.geteRank() == eRank.QUEEN || c.geteRank() == eRank.KING)
-			{
-				tempxScore += 10;
-			}
-			else
-			{
-				tempxScore += c.geteRank().getiRankNbr();
-			}
-			
-		}
-		iScore[1] = tempxScore;
+		SetHandScore(iScore);
 		return iScore;
 	}
-	
-	public void Draw(Deck d)
+	public boolean bCanDealerHit()
+	{
+		for(int iScore : ScoreHand())
+		{
+			if(iScore >= 17)
+			{
+				return false;
+			}
+		}
+		return true;
+	}
+	public boolean bCanPlayerDraw()
+	{
+		for(int iScore : ScoreHand())
+		{
+			if(iScore < 21)
+				return true;
+		}
+		return false;
+	}
+	public boolean isBlackjack()
+	{
+		int[] iScores = ScoreHand();
+		if(cards.size() == 2 && iScores[1] == 21)
+		{
+			return true;
+		}
+		return false;
+	}
+	public void SetHandScore(int[] Scores)
+	{
+		this.iScore = Scores[0];
+		if(Scores[1] <= 21)
+		{
+			this.iScore = Scores[1];
+		}
+	}
+	public void Draw(Deck d) throws DeckException
 	{
 		this.AddCard(d.draw());
 	}

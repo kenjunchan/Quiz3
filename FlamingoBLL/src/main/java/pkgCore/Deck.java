@@ -1,11 +1,11 @@
 package pkgCore;
 import pkgEnum.*;
-
+import Exceptions.*;
 import java.util.*;
 
 public class Deck {
 
-	ArrayList<Card> cards = new ArrayList();
+	ArrayList<Card> cards = new ArrayList<Card>();
 
 	public Deck(int numberOfDecks)
 	{
@@ -22,11 +22,17 @@ public class Deck {
 		
 		Collections.shuffle(cards);
 	}
-	
-	public Card draw()
+	public Deck() throws DeckException
+	{
+		this(1);
+	}
+	public Card draw() throws DeckException
 	{		
+		if(cards.size() == 0)
+			throw new DeckException(this);
 		return cards.remove(0);
 	}
+	
 	public int getDeckSize()
 	{
 		return cards.size();

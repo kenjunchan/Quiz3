@@ -29,7 +29,7 @@ public class HandTest {
 			//	Create an instance of Hand
 			Object inst = c.newInstance();
 
-			//	Find the method 'AddCard' in Hand
+			//	Find the method 'AddCard' in Hand 
 			Method mAddCard = c.getDeclaredMethod("AddCard", cArgsAddCard);
 			
 			//	Make the private method accessible 
