@@ -29,10 +29,23 @@ public class Deck {
 	public Card draw() throws DeckException
 	{		
 		if(cards.size() == 0)
+		{
 			throw new DeckException(this);
+		}
 		return cards.remove(0);
 	}
-	
+	public int getRemaining(Object eNum)
+	{
+		int count = 0;
+		for(Card c : cards)
+		{
+			if(eNum instanceof eSuit && c.geteSuit() == eNum)
+				count += 1;
+			else if(eNum instanceof eRank && c.geteRank() == eNum)
+				count += 1;	
+		}
+		return count;
+	}
 	public int getDeckSize()
 	{
 		return cards.size();
